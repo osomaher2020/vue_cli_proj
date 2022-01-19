@@ -3,6 +3,8 @@
     <h1>{{ msg }}</h1>
     <h3>{{ header }}</h3>
     <p>{{student_name}}</p>
+    <hr>
+    <button @click="hide_MyComponent">hide MyComponent</button>
   </div>
 </template>
 
@@ -12,6 +14,11 @@ export default {
   data(){
     return {
       msg: 'Hello from myComponent'
+    }
+  },
+  methods: {
+    hide_MyComponent(){
+      this.$emit('closeMyComponent')
     }
   }
 }

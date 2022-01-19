@@ -21,23 +21,32 @@
       </template>
     </ComponentWithSlots>
   </teleport>
+
+  <hr>
+  <h1>Reaction timer</h1>
+  <button @click="startReactionTimer" :disabled="isPlaying">Play</button>
+  <Block v-if="isPlaying" :delay="currentDelay" @closeBlock="closeIt"/>
 </template>
 
 <script>
 import MyComponent from './components/MyComponent'
 import ComponentWithSlots from './components/ComponentWithSlots'
+import Block from './components/reaction_timer/Block.vue'
 
 export default {
   name: 'App',
   components: {
     MyComponent,
-    ComponentWithSlots
+    ComponentWithSlots,
+    Block
   },
   data() {
     return {
       title: 'My Vue App :)',
       name: 'osama',
-      showMyComponent: false
+      showMyComponent: false,
+      isPlaying: false,
+      currentDelay: null
     }
   },
   methods: {
@@ -48,6 +57,14 @@ export default {
     },
     toggleMyComponent(){
       this.showMyComponent = !this.showMyComponent
+    },
+    startReactionTimer(){
+      this.currentDelay = 2000 + Math.floor(Math.random() * 3000) // Math.random() generates-> 0 : <1
+      this.isPlaying = true
+      console.log(this.currentDelay/1000)
+    },
+    closeIt(){
+      this.isPlaying = false
     }
   }
 }

@@ -25,20 +25,25 @@
   <hr>
   <h1>Reaction timer</h1>
   <button @click="startReactionTimer" :disabled="isPlaying">Play</button>
-  <Block v-if="isPlaying" :delay="currentDelay" @closeBlock="closeIt"/>
+  <GameBlock v-if="isPlaying" :delay="currentDelay" @closeBlock="closeIt" @endGame="showGameResult"/>
+  <!-- <p>Your Score: {{score}} ms</p> -->
+  <GameResult v-if="showScore" :score="score" />
 </template>
 
 <script>
 import MyComponent from './components/MyComponent'
 import ComponentWithSlots from './components/ComponentWithSlots'
-import Block from './components/reaction_timer/Block.vue'
+
+import GameBlock from './components/reaction_timer/GameBlock.vue'
+import GameResult from './components/reaction_timer/GameResult.vue'
 
 export default {
   name: 'App',
   components: {
     MyComponent,
     ComponentWithSlots,
-    Block
+    GameBlock,
+    GameResult
   },
   data() {
     return {
@@ -46,7 +51,9 @@ export default {
       name: 'osama',
       showMyComponent: false,
       isPlaying: false,
-      currentDelay: null
+      currentDelay: null,
+      score: null,
+      showScore: false
     }
   },
   methods: {
@@ -62,9 +69,16 @@ export default {
       this.currentDelay = 2000 + Math.floor(Math.random() * 3000) // Math.random() generates-> 0 : <1
       this.isPlaying = true
       console.log(this.currentDelay/1000)
+
+      this.showScore = false
     },
     closeIt(){
       this.isPlaying = false
+    },
+    showGameResult(reactionTime) {
+      this.score = reactionTime
+      this.isPlaying = false
+      this.showScore = true
     }
   }
 }

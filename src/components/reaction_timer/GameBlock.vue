@@ -1,7 +1,7 @@
 <template>
     <div class="block" v-if="showBlock" @click.right="hideblock" @click.left="stopTimer">
         <p>click me</p>
-        <h3 v-if="showScore">score: {{ yourScore }}</h3>
+        <h3>score: {{ reactionTime }}</h3>
     </div>
 </template>
 
@@ -12,9 +12,7 @@ export default {
         return {
             showBlock: false,
             timer: null,
-            reactionTimer: 0,
-            showScore: false,
-            yourScore: 0
+            reactionTime: 0,
         }
     },
     methods: {
@@ -24,14 +22,13 @@ export default {
         },
         startTimer() {
             this.timer = setInterval(
-                () => { this.reactionTimer += 100 },
+                () => { this.reactionTime += 100 },
                 100
             )
         },
         stopTimer() {
             clearInterval(this.timer)
-            this.showScore = true
-            this.yourScore = this.reactionTimer
+            this.$emit('endGame', this.reactionTime)
         },
     },
     created() {

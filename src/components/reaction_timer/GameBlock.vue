@@ -1,7 +1,7 @@
 <template>
     <div class="block" v-if="showBlock" @click.right="hideblock" @click.left="stopTimer">
         <p>click me</p>
-        <h3>score: {{ reactionTime }}</h3>
+        <h3>Time: {{ reactionTime }}</h3>
     </div>
 </template>
 
